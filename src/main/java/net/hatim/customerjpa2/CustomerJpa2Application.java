@@ -24,19 +24,19 @@ CommandLineRunner commandLineRunner(UtilisateurRepository utilisateurRepository)
     return args -> {
         List<Utilisateur> customerList = List.of(
                 Utilisateur.builder()
-                        .nom("Hassan")
+                        .nom("HassanSQL")
                         .email("hassan@gmail.com")
                         .build(),
                 Utilisateur.builder()
-                        .nom("Hassan2")
+                        .nom("Hassan2SQL")
                         .email("hassan2@gmail.com")
                         .build(),
                 Utilisateur.builder()
-                        .nom("Hassan3")
+                        .nom("Hassan3SQL")
                         .email("hassan3@gmail.com")
                         .build(),
                 Utilisateur.builder()
-                        .nom("Hassan4")
+                        .nom("Hassan5SQL")
                         .email("hassan4@gmail.com")
                         .build()
         );
