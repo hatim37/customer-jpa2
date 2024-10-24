@@ -30,7 +30,7 @@ jobs:
           gcloud run deploy ${{ secrets.CLOUD_RUN_SERVICE_NAME }} \
           --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/customer:latest \
           --add-cloudsql-instances windy-anchor-432416-e8:europe-west1:studi\
-          --update-env DB_USER=hatim,DB_PASS=Mfarej860!,DB_NAME=jpa \
+          --update-env-vars DB_HOST=/cloudsql/windy-anchor-432416-e8:europe-west1:studi, DB_USER=hatim,DB_PASS=Mfarej860!,DB_NAME=jpa \
           --platform managed \
           --region
           --allow-unauthenticated \
