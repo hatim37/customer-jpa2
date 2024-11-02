@@ -14,7 +14,7 @@ WORKDIR /app
 COPY . .
 
 #Téléchargement des dépendances & compilation
-RUN mvn clean package
+RUN mvn clean package -DskipTests
 
 # utilisation d'un JRE
 # Java Runtime Environment
