@@ -44,9 +44,11 @@ jobs:
 #          --add-cloudsql-instances jeux-olym-433811:us-central1:jpa \
 #          --timeout=300 \
 
-          gcloud run deploy ${{ secrets.CLOUD_RUN_SERVICE_NAME }} \
-          --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/cloud-customer-service:latest \
+          gcloud run deploy customer-jpa2 \
+          --image gcr.io/jeux-olym-433811/customer:latest \
           --platform managed \
           --region us-central1 \
           --allow-unauthenticated \
-          --service-account ${{ secrets.GCP_SERVICE_ACCOUNT }}
+          --service-account 322412772301-compute@developer.gserviceaccount.com \
+          --add-cloudsql-instances jeux-olym-433811:us-central1:jpa \
+          --timeout=300 \
