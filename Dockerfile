@@ -29,15 +29,22 @@
 ## commande qui sera executé lors du lancement du container
 #ENTRYPOINT ["java","-jar","app.war"]
 
+# Étape build
 FROM maven:3.9.7-eclipse-temurin-17 AS build
 WORKDIR /app
-COPY pom.xml .
-RUN mvn -q -DskipTests dependency:go-offline
-COPY src ./src
-RUN mvn clean package -DskipTests
 
+COPY pom.xml .
+# Force la mise à jour pour casser le cache négatif Maven
+RUN mvn -U -q -DskipTests dependency:go-offline
+
+COPY src ./src
+RUN mvn -U clean package -DskipTests
+
+# Étape runtime
 FROM eclipse-temurin:17-jre-jammy
 WORKDIR /app
+
 COPY --from=build /app/target/*.jar app.jar
 EXPOSE 8080
+
 ENTRYPOINT ["java","-jar","app.jar"]
