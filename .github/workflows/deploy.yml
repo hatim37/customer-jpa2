@@ -41,9 +41,8 @@ jobs:
           --region us-central1 \
           --allow-unauthenticated \
           --service-account 322412772301-compute@developer.gserviceaccount.com \
+          --add-cloudsql-instances jeux-olym-433811:us-central1:jpa \
           --timeout=300 \
-          --set-env-vars SPRING_AUTOCONFIGURE_EXCLUDE=org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration,org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
-
 #name: Deploy to Cloud Run
 #on:
 #  push:
