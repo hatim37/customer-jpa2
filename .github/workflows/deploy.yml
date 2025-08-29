@@ -43,4 +43,5 @@ jobs:
           --platform managed \
           --region us-central1 \
           --allow-unauthenticated \
+          --timeout=300 \
           --service-account ${{ secrets.GCP_SERVICE_ACCOUNT }}
