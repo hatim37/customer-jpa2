@@ -131,7 +131,6 @@ jobs:
             --region us-central1 \
             --allow-unauthenticated \
             --service-account ${{ secrets.GCP_SERVICE_ACCOUNT }} \
-            --timeout=300 \
             --set-env-vars SPRING_AUTOCONFIGURE_EXCLUDE=org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration,org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
 
       - name: Show service URL
