@@ -6,6 +6,8 @@ import net.hatim.customerjpa2.entities.Utilisateur;
 import net.hatim.customerjpa2.repository.UtilisateurRepository;
 import net.hatim.customerjpa2.service.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,6 +33,12 @@ private UtilisateurRepository utilisateurRepository;
     public void inscription(@RequestBody Utilisateur utilisateur){
         log.info("inscription");
         this.utilisateurService.inscription(utilisateur);
+    }
+
+    @GetMapping(path = "/test")
+    public ResponseEntity<?> test(){
+        return new ResponseEntity<>("Test", HttpStatus.OK);
+
     }
 
 }

@@ -11,7 +11,7 @@
     <groupId>net.hatim</groupId>
     <artifactId>customer-jpa2</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <!--<packaging>war</packaging>-->
+    <packaging>war</packaging>
     <name>customer-jpa2</name>
     <description>customer-jpa2</description>
     <url/>
