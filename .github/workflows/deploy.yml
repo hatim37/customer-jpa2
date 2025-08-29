@@ -36,14 +36,13 @@ jobs:
 #          --allow-unauthenticated \
 #          --service-account ${{ secrets.GCP_SERVICE_ACCOUNT }}
         run: |
-          gcloud run deploy ${{ secrets.CLOUD_RUN_SERVICE_NAME }} \
-          --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/customer:latest \
+          --image gcr.io/jeux-olym-433811/customer:latest \
           --platform managed \
-          --region
+          --region us-central1 \
           --allow-unauthenticated \
-          --add-cloudsql-instances jeux-olym-433811:us-central1:jpa \
-          --update-env-vars DB_HOST=/cloudsql/jeux-olym-433811:us-central1:jpa, DB_USER=root,DB_PASS=Mfarej860!,DB_NAME=jpa \
-          --service-account ${{ secrets.GCP_SERVICE_ACCOUNT }}
+          --service-account 322412772301-compute@developer.gserviceaccount.com \
+          --timeout=300 \
+          --set-env-vars SPRING_AUTOCONFIGURE_EXCLUDE=org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration,org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
 
 #name: Deploy to Cloud Run
 #on:

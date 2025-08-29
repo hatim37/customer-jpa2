@@ -18,7 +18,7 @@ public class CustomerJpa2Application {
 
 
 
-
+/*
 @Bean
 CommandLineRunner commandLineRunner(UtilisateurRepository utilisateurRepository){
     return args -> {
@@ -42,5 +42,5 @@ CommandLineRunner commandLineRunner(UtilisateurRepository utilisateurRepository)
         );
         utilisateurRepository.saveAll(customerList);
     };
-}
+}*/
 }
