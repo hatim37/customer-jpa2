@@ -19,7 +19,7 @@ public class CustomerJpa2Application {
 
 
 
-/*@Bean
+/****@Bean
 CommandLineRunner commandLineRunner(UtilisateurRepository utilisateurRepository){
     return args -> {
         List<Utilisateur> customerList = List.of(
