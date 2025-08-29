@@ -35,7 +35,7 @@ jobs:
 #          --region
 #          --allow-unauthenticated \
 #          --service-account ${{ secrets.GCP_SERVICE_ACCOUNT }}
-        run: |
+        #run: |
 #          --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/customer:latest \
 #          --platform managed \
 #          --region us-central1 \
@@ -43,12 +43,12 @@ jobs:
 #          --service-account 322412772301-compute@developer.gserviceaccount.com \
 #          --add-cloudsql-instances jeux-olym-433811:us-central1:jpa \
 #          --timeout=300 \
-
+        run: |  
           gcloud run deploy customer-jpa2 \
           --image gcr.io/jeux-olym-433811/customer:latest \
           --platform managed \
           --region us-central1 \
           --allow-unauthenticated \
           --service-account 322412772301-compute@developer.gserviceaccount.com \
-          --add-cloudsql-instances jeux-olym-433811:us-central1:jpa \
           --timeout=300 \
+          --set-env-vars SPRING_AUTOCONFIGURE_EXCLUDE=org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration,org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
