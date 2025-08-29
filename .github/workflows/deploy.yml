@@ -37,7 +37,7 @@ jobs:
 #          --service-account ${{ secrets.GCP_SERVICE_ACCOUNT }}
         run: |
           gcloud run deploy ${{ secrets.CLOUD_RUN_SERVICE_NAME }} \
-          --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/customer2:latest \
+          --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/customer:latest \
           --platform managed \
           --region
           --allow-unauthenticated \
