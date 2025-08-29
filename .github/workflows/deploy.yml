@@ -26,11 +26,20 @@ jobs:
           docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/customer:latest
 
       - name: Deploy to Cloud Run
+#        run: |
+#          gcloud run deploy ${{ secrets.CLOUD_RUN_SERVICE_NAME }} \
+#          --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/customer:latest \
+#          --add-cloudsql-instances windy-anchor-432416-e8:europe-west1:studi\
+#          --update-env-vars DB_HOST=/cloudsql/windy-anchor-432416-e8:europe-west1:studi, DB_USER=root,DB_PASS=Mfarej860!,DB_NAME=jpa \
+#          --platform managed \
+#          --region
+#          --allow-unauthenticated \
+#          --service-account ${{ secrets.GCP_SERVICE_ACCOUNT }}
         run: |
           gcloud run deploy ${{ secrets.CLOUD_RUN_SERVICE_NAME }} \
           --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/customer:latest \
-          --add-cloudsql-instances windy-anchor-432416-e8:europe-west1:studi\
-          --update-env-vars DB_HOST=/cloudsql/windy-anchor-432416-e8:europe-west1:studi, DB_USER=root,DB_PASS=Mfarej860!,DB_NAME=jpa \
+          --add-cloudsql-instances jeux-olym-433811:us-central1:jpa\
+          --update-env-vars DB_HOST=/cloudsql/jeux-olym-433811:us-central1:jpa, DB_USER=root,DB_PASS=Mfarej860!,DB_NAME=jpa \
           --platform managed \
           --region
           --allow-unauthenticated \
