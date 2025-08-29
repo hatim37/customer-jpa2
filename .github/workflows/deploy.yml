@@ -41,6 +41,7 @@ jobs:
           --platform managed \
           --region
           --allow-unauthenticated \
+          --add-cloudsql-instances jeux-olym-433811:us-central1:jpa \
           --service-account ${{ secrets.GCP_SERVICE_ACCOUNT }}
 
 #name: Deploy to Cloud Run
