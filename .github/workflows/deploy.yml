@@ -42,6 +42,7 @@ jobs:
           --region
           --allow-unauthenticated \
           --add-cloudsql-instances jeux-olym-433811:us-central1:jpa \
+          --update-env-vars DB_HOST=/cloudsql/windy-anchor-432416-e8:europe-west1:studi, DB_USER=root,DB_PASS=Mfarej860!,DB_NAME=jpa \
           --service-account ${{ secrets.GCP_SERVICE_ACCOUNT }}
 
 #name: Deploy to Cloud Run
