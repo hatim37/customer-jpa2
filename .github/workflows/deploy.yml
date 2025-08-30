@@ -53,6 +53,52 @@
 #          --timeout=300 \
 #          --set-env-vars SPRING_AUTOCONFIGURE_EXCLUDE=org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration,org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
 
+
+
+#name: Deploy to Cloud Run
+#
+#on:
+#  push:
+#    branches: [ main ]
+#  workflow_dispatch:
+#
+#jobs:
+#  deploy:
+#    runs-on: ubuntu-latest
+#    environment: prod
+#
+#    steps:
+#      - name: Récupérer le code
+#        uses: actions/checkout@v4
+#
+#      - name: Installer gcloud
+#        uses: google-github-actions/setup-gcloud@v2
+#        with:
+#          project_id: jeux-olym-433811
+#          service_account_key: ${{ secrets.GCP_SA_KEY }}
+#          export_default_credentials: true
+#
+#      - name: Auth Docker pour gcr.io
+#        run: gcloud auth configure-docker gcr.io
+#
+#      - name: Build & Push image (JAR)
+#        run: |
+#          docker build -t gcr.io/jeux-olym-433811/customer:latest .
+#          docker push gcr.io/jeux-olym-433811/customer:latest
+#
+#      - name: Déployer sur Cloud Run (SMOKE, sans Cloud SQL)
+#        run: |
+#          gcloud run deploy customer-jpa2 \
+#            --image gcr.io/jeux-olym-433811/customer:latest \
+#            --platform managed \
+#            --region europe-west1 \
+#            --allow-unauthenticated \
+#            --timeout=300
+#
+#      - name: Afficher l’URL du service
+#        run: gcloud run services describe customer-jpa2 --region europe-west1 --format='value(status.url)'
+
+
 name: Deploy to Cloud Run
 
 on:
@@ -84,13 +130,15 @@ jobs:
           docker build -t gcr.io/jeux-olym-433811/customer:latest .
           docker push gcr.io/jeux-olym-433811/customer:latest
 
-      - name: Déployer sur Cloud Run (SMOKE, sans Cloud SQL)
+      - name: Déployer sur Cloud Run (avec Cloud SQL)
         run: |
           gcloud run deploy customer-jpa2 \
             --image gcr.io/jeux-olym-433811/customer:latest \
             --platform managed \
             --region europe-west1 \
             --allow-unauthenticated \
+            --service-account 322412772301-compute@developer.gserviceaccount.com \
+            --add-cloudsql-instances jeux-olym-433811:us-central1:jpa \
             --timeout=300
 
       - name: Afficher l’URL du service
