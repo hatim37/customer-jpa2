@@ -47,7 +47,7 @@ jobs:
           gcloud run deploy customer-jpa2 \
           --image gcr.io/jeux-olym-433811/customer:latest \
           --platform managed \
-          --region \
+          --region europe-west1 \
           --allow-unauthenticated \
           --service-account 322412772301-compute@developer.gserviceaccount.com \
           --timeout=300 \
