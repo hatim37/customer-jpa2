@@ -30,19 +30,15 @@
 #ENTRYPOINT ["java","-jar","app.war"]
 
 
-# Étape build : on produit le WAR
 FROM maven:3.9.7-eclipse-temurin-17 AS build
 WORKDIR /app
 COPY . .
 RUN mvn -U clean package -DskipTests
 
-# Étape runtime : Tomcat écoute 8080
 FROM tomcat:9.0.91-jre17-temurin
-# Nettoyer l'app par défaut
 RUN rm -rf /usr/local/tomcat/webapps/ROOT
-# Déployer ton WAR en tant que ROOT.war
 COPY --from=build /app/target/*.war /usr/local/tomcat/webapps/ROOT.war
-
 EXPOSE 8080
 CMD ["catalina.sh","run"]
+
 

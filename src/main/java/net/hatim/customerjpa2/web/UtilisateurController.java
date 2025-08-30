@@ -41,4 +41,9 @@ private UtilisateurRepository utilisateurRepository;
 
     }
 
+    public class PingController {
+        @GetMapping({"/", "/ping", "/healthz"})
+        public String ping() { return "OK"; }
+    }
+
 }
