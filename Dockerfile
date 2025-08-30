@@ -30,11 +30,13 @@
 #ENTRYPOINT ["java","-jar","app.war"]
 
 
+# Build WAR
 FROM maven:3.9.7-eclipse-temurin-17 AS build
 WORKDIR /app
 COPY . .
 RUN mvn -U clean package -DskipTests
 
+# Run sur Tomcat
 FROM tomcat:9.0.91-jre17-temurin
 RUN rm -rf /usr/local/tomcat/webapps/ROOT
 COPY --from=build /app/target/*.war /usr/local/tomcat/webapps/ROOT.war
