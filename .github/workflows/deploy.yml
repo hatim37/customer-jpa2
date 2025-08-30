@@ -79,19 +79,18 @@ jobs:
       - name: Auth Docker pour gcr.io
         run: gcloud auth configure-docker gcr.io
 
-      - name: Build & Push image
+      - name: Build & Push image (JAR)
         run: |
           docker build -t gcr.io/jeux-olym-433811/customer:latest .
           docker push gcr.io/jeux-olym-433811/customer:latest
 
-      - name: Déployer sur Cloud Run (SMOKE sans BDD)
+      - name: Déployer sur Cloud Run (SMOKE, sans Cloud SQL)
         run: |
           gcloud run deploy customer-jpa2 \
             --image gcr.io/jeux-olym-433811/customer:latest \
             --platform managed \
             --region europe-west1 \
             --allow-unauthenticated \
-            --service-account 322412772301-compute@developer.gserviceaccount.com \
             --timeout=300
 
       - name: Afficher l’URL du service

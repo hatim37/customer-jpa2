@@ -30,17 +30,19 @@
 #ENTRYPOINT ["java","-jar","app.war"]
 
 
-# Build WAR
+# Build
 FROM maven:3.9.7-eclipse-temurin-17 AS build
 WORKDIR /app
-COPY . .
+COPY pom.xml .
+RUN mvn -U -q -DskipTests dependency:go-offline
+COPY src ./src
 RUN mvn -U clean package -DskipTests
 
-# Run sur Tomcat
-FROM tomcat:9.0.91-jre17-temurin
-RUN rm -rf /usr/local/tomcat/webapps/ROOT
-COPY --from=build /app/target/*.war /usr/local/tomcat/webapps/ROOT.war
+# Run
+FROM eclipse-temurin:17-jre-jammy
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
 EXPOSE 8080
-CMD ["catalina.sh","run"]
+ENTRYPOINT ["java","-jar","app.jar"]
 
 
