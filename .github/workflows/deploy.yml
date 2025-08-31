@@ -138,7 +138,7 @@ jobs:
             --region europe-west1 \
             --allow-unauthenticated \
             --service-account 322412772301-compute@developer.gserviceaccount.com \
-            --add-cloudsql-instances jeux-olym-433811:us-central1:jpa \
+            --add-cloudsql-instances jeux-olym-433811:europe-west1:jpa \
             --timeout=300
 
       - name: Afficher l’URL du service
