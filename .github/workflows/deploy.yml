@@ -99,88 +99,47 @@
 #        run: gcloud run services describe customer-jpa2 --region europe-west1 --format='value(status.url)'
 
 
-#name: Deploy to Cloud Run
-#
-#on:
-#  push:
-#    branches: [ main ]
-#  workflow_dispatch:
-#
-#jobs:
-#  deploy:
-#    runs-on: ubuntu-latest
-#    environment: prod
-#
-#    steps:
-#      - name: Récupérer le code
-#        uses: actions/checkout@v4
-#
-#      - name: Installer gcloud
-#        uses: google-github-actions/setup-gcloud@v2
-#        with:
-#          project_id: jeux-olym-433811
-#          service_account_key: ${{ secrets.GCP_SA_KEY }}
-#          export_default_credentials: true
-#
-#      - name: Auth Docker pour gcr.io
-#        run: gcloud auth configure-docker gcr.io
-#
-#      - name: Build & Push image (JAR)
-#        run: |
-#          docker build -t gcr.io/jeux-olym-433811/customer:latest .
-#          docker push gcr.io/jeux-olym-433811/customer:latest
-#
-#      - name: Déployer sur Cloud Run (avec Cloud SQL)
-#        run: |
-#          gcloud run deploy customer-jpa2 \
-#            --image gcr.io/jeux-olym-433811/customer:latest \
-#            --platform managed \
-#            --region europe-west1 \
-#            --allow-unauthenticated \
-#            --service-account 322412772301-compute@developer.gserviceaccount.com \
-#            --add-cloudsql-instances jeux-olym-433811:us-central1:jpa \
-#            --timeout=300
-#
-#      - name: Afficher l’URL du service
-#        run: gcloud run services describe customer-jpa2 --region europe-west1 --format='value(status.url)'
-
-
-
-
 name: Deploy to Cloud Run
+
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
+  workflow_dispatch:
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     environment: prod
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Récupérer le code
+        uses: actions/checkout@v4
 
-      - name: Set up GCP SDK
-        uses: google-github-actions/setup-gcloud@v1
+      - name: Installer gcloud
+        uses: google-github-actions/setup-gcloud@v2
         with:
-          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          project_id: jeux-olym-433811
           service_account_key: ${{ secrets.GCP_SA_KEY }}
+          export_default_credentials: true
 
-      - name : Authenticate Docker with GCP
-        run: gcloud auth configure-docker
+      - name: Auth Docker pour gcr.io
+        run: gcloud auth configure-docker gcr.io
 
-      - name : Build Docker Image
+      - name: Build & Push image (JAR)
         run: |
-          docker build . -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/customer:latest
-          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/customer:latest
+          docker build -t gcr.io/jeux-olym-433811/customer:latest .
+          docker push gcr.io/jeux-olym-433811/customer:latest
 
-      - name: Deploy to Cloud Run
+      - name: Déployer sur Cloud Run (avec Cloud SQL)
         run: |
-          gcloud run deploy ${{ secrets.CLOUD_RUN_SERVICE_NAME }} \
-          --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/customer:latest \
-          --add-cloudsql-instances jeux-olym-433811:europe-west1:jpa\
-          --update-env-vars DB_HOST=/cloudsql/jeux-olym-433811:europe-west1:jpa, DB_USER=root,DB_PASS=Mfarej860!,DB_NAME=jpa \
-          --platform managed \
-          --region europe-west1 \
-          --allow-unauthenticated \
-          --service-account ${{ secrets.GCP_SERVICE_ACCOUNT }}
+          gcloud run deploy customer-jpa2 \
+            --image gcr.io/jeux-olym-433811/customer:latest \
+            --platform managed \
+            --region europe-west1 \
+            --allow-unauthenticated \
+            --service-account 322412772301-compute@developer.gserviceaccount.com \
+            --add-cloudsql-instances jeux-olym-433811:us-central1:jpa \
+            --timeout=300
+
+      - name: Afficher l’URL du service
+        run: gcloud run services describe customer-jpa2 --region europe-west1 --format='value(status.url)'
